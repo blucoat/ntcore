@@ -25,9 +25,9 @@
 
 namespace nt {
 
-using llvm::ArrayRef;
-using llvm::StringRef;
-using llvm::Twine;
+using wpi_llvm::ArrayRef;
+using wpi_llvm::StringRef;
+using wpi_llvm::Twine;
 
 /**
  * A network table entry value.

@@ -27,9 +27,9 @@
 
 namespace nt {
 
-using llvm::ArrayRef;
-using llvm::StringRef;
-using llvm::Twine;
+using wpi_llvm::ArrayRef;
+using wpi_llvm::StringRef;
+using wpi_llvm::Twine;
 
 class NetworkTableInstance;
 
@@ -46,7 +46,7 @@ class NetworkTable final : public ITable {
   NT_Inst m_inst;
   std::string m_path;
   mutable wpi::mutex m_mutex;
-  mutable llvm::StringMap<NT_Entry> m_entries;
+  mutable wpi_llvm::StringMap<NT_Entry> m_entries;
   typedef std::pair<ITableListener*, NT_EntryListener> Listener;
   std::vector<Listener> m_listeners;
 
@@ -89,7 +89,7 @@ class NetworkTable final : public ITable {
                                   bool withLeadingSlash = true);
 
   static StringRef NormalizeKey(const Twine& key,
-                                llvm::SmallVectorImpl<char>& buf,
+                                wpi_llvm::SmallVectorImpl<char>& buf,
                                 bool withLeadingSlash = true);
 
   /**

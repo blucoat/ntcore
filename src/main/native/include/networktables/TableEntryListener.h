@@ -19,7 +19,7 @@ class NetworkTable;
 class NetworkTableEntry;
 class Value;
 
-using llvm::StringRef;
+using wpi_llvm::StringRef;
 
 /**
  * A listener that listens to changes in values in a NetworkTable.

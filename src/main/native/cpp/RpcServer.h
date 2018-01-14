@@ -75,7 +75,7 @@ class RpcServerThread
 
   int m_inst;
   wpi::Logger& m_logger;
-  llvm::DenseMap<RpcIdPair, IRpcServer::SendResponseFunc> m_response_map;
+  wpi_llvm::DenseMap<RpcIdPair, IRpcServer::SendResponseFunc> m_response_map;
 };
 
 }  // namespace impl
@@ -100,7 +100,7 @@ class RpcServer : public IRpcServer,
                   unsigned int rpc_uid) override;
 
   void PostRpcResponse(unsigned int local_id, unsigned int call_uid,
-                       llvm::StringRef result);
+                       wpi_llvm::StringRef result);
 
  private:
   int m_inst;

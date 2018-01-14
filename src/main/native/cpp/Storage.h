@@ -29,9 +29,9 @@
 #include "SequenceNumber.h"
 #include "ntcore_cpp.h"
 
-namespace llvm {
+namespace wpi_llvm {
 class raw_ostream;
-}  // namespace llvm
+}  // namespace wpi_llvm
 
 namespace wpi {
 class Logger;
@@ -72,7 +72,7 @@ class Storage : public IStorage {
       INetworkConnection& conn,
       std::vector<std::shared_ptr<Message>>* msgs) override;
   void ApplyInitialAssignments(
-      INetworkConnection& conn, llvm::ArrayRef<std::shared_ptr<Message>> msgs,
+      INetworkConnection& conn, wpi_llvm::ArrayRef<std::shared_ptr<Message>> msgs,
       bool new_server,
       std::vector<std::shared_ptr<Message>>* out_msgs) override;
 
@@ -142,11 +142,11 @@ class Storage : public IStorage {
 
   // Stream-based save/load functions (exposed for testing purposes).  These
   // implement the guts of the filename-based functions.
-  void SavePersistent(llvm::raw_ostream& os, bool periodic) const;
+  void SavePersistent(wpi_llvm::raw_ostream& os, bool periodic) const;
   bool LoadEntries(wpi::raw_istream& is, const Twine& prefix, bool persistent,
                    std::function<void(size_t line, const char* msg)> warn);
 
-  void SaveEntries(llvm::raw_ostream& os, const Twine& prefix) const;
+  void SaveEntries(wpi_llvm::raw_ostream& os, const Twine& prefix) const;
 
   // RPC configuration needs to come through here as RPC definitions are
   // actually special Storage value types.
@@ -161,7 +161,7 @@ class Storage : public IStorage {
  private:
   // Data for each table entry.
   struct Entry {
-    explicit Entry(llvm::StringRef name_) : name(name_) {}
+    explicit Entry(wpi_llvm::StringRef name_) : name(name_) {}
     bool IsPersistent() const { return (flags & NT_PERSISTENT) != 0; }
 
     // We redundantly store the name so that it's available when accessing the
@@ -195,12 +195,12 @@ class Storage : public IStorage {
     unsigned int rpc_call_uid{0};
   };
 
-  typedef llvm::StringMap<Entry*> EntriesMap;
+  typedef wpi_llvm::StringMap<Entry*> EntriesMap;
   typedef std::vector<Entry*> IdMap;
   typedef std::vector<std::unique_ptr<Entry>> LocalMap;
   typedef std::pair<unsigned int, unsigned int> RpcIdPair;
-  typedef llvm::DenseMap<RpcIdPair, std::string> RpcResultMap;
-  typedef llvm::SmallSet<RpcIdPair, 12> RpcBlockingCallSet;
+  typedef wpi_llvm::DenseMap<RpcIdPair, std::string> RpcResultMap;
+  typedef wpi_llvm::SmallSet<RpcIdPair, 12> RpcBlockingCallSet;
 
   mutable wpi::mutex m_mutex;
   EntriesMap m_entries;

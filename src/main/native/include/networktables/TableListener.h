@@ -17,7 +17,7 @@ namespace nt {
 
 class NetworkTable;
 
-using llvm::StringRef;
+using wpi_llvm::StringRef;
 
 /**
  * A listener that listens to new sub-tables in a NetworkTable.

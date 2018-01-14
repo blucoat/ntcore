@@ -16,15 +16,15 @@ using namespace nt;
 
 static void DefaultLogger(unsigned int level, const char* file,
                           unsigned int line, const char* msg) {
-  llvm::SmallString<128> buf;
-  llvm::raw_svector_ostream oss(buf);
+  wpi_llvm::SmallString<128> buf;
+  wpi_llvm::raw_svector_ostream oss(buf);
   if (level == 20) {
     oss << "NT: " << msg << '\n';
-    llvm::errs() << oss.str();
+    wpi_llvm::errs() << oss.str();
     return;
   }
 
-  llvm::StringRef levelmsg;
+  wpi_llvm::StringRef levelmsg;
   if (level >= 50)
     levelmsg = "CRITICAL: ";
   else if (level >= 40)
@@ -34,7 +34,7 @@ static void DefaultLogger(unsigned int level, const char* file,
   else
     return;
   oss << "NT: " << levelmsg << msg << " (" << file << ':' << line << ")\n";
-  llvm::errs() << oss.str();
+  wpi_llvm::errs() << oss.str();
 }
 
 LoggerImpl::LoggerImpl(int inst) : m_inst(inst) {}
@@ -67,7 +67,7 @@ unsigned int LoggerImpl::GetMinLevel() {
 void LoggerImpl::Log(unsigned int level, const char* file, unsigned int line,
                      const char* msg) {
   // this is safe because it's null terminated and always the end
-  const char* filename = llvm::sys::path::filename(file).data();
+  const char* filename = wpi_llvm::sys::path::filename(file).data();
   {
     auto thr = GetThread();
     if (!thr || thr->m_listeners.empty())

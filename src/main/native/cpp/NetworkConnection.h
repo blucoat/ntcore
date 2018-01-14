@@ -40,7 +40,7 @@ class NetworkConnection : public INetworkConnection {
   typedef std::function<bool(
       NetworkConnection& conn,
       std::function<std::shared_ptr<Message>()> get_msg,
-      std::function<void(llvm::ArrayRef<std::shared_ptr<Message>>)> send_msgs)>
+      std::function<void(wpi_llvm::ArrayRef<std::shared_ptr<Message>>)> send_msgs)>
       HandshakeFunc;
   typedef std::function<void(std::shared_ptr<Message> msg,
                              NetworkConnection* conn)>

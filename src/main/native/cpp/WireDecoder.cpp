@@ -43,7 +43,7 @@ static double ReadDouble(const char*& buf) {
   val <<= 8;
   val |= (*reinterpret_cast<const unsigned char*>(buf)) & 0xff;
   ++buf;
-  return llvm::BitsToDouble(val);
+  return wpi_llvm::BitsToDouble(val);
 }
 
 WireDecoder::WireDecoder(wpi::raw_istream& is, unsigned int proto_rev,
@@ -202,6 +202,6 @@ bool WireDecoder::ReadString(std::string* str) {
   }
   const char* buf;
   if (!Read(&buf, len)) return false;
-  *str = llvm::StringRef(buf, len);
+  *str = wpi_llvm::StringRef(buf, len);
   return true;
 }

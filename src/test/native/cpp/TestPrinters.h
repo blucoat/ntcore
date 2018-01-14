@@ -15,13 +15,13 @@
 
 #include "gtest/gtest.h"
 
-namespace llvm {
+namespace wpi_llvm {
 
 inline void PrintTo(StringRef str, ::std::ostream* os) {
   ::testing::internal::PrintStringTo(str.str(), os);
 }
 
-}  // namespace llvm
+}  // namespace wpi_llvm
 
 namespace nt {
 

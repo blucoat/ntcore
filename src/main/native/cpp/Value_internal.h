@@ -21,9 +21,9 @@ class Value;
 
 void ConvertToC(const Value& in, NT_Value* out);
 std::shared_ptr<Value> ConvertFromC(const NT_Value& value);
-void ConvertToC(llvm::StringRef in, NT_String* out);
-inline llvm::StringRef ConvertFromC(const NT_String& str) {
-  return llvm::StringRef(str.str, str.len);
+void ConvertToC(wpi_llvm::StringRef in, NT_String* out);
+inline wpi_llvm::StringRef ConvertFromC(const NT_String& str) {
+  return wpi_llvm::StringRef(str.str, str.len);
 }
 
 }  // namespace nt

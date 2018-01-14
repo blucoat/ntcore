@@ -128,7 +128,7 @@ class StorageTestPersistent : public StorageTestEmpty {
 
 class MockLoadWarn {
  public:
-  MOCK_METHOD2(Warn, void(size_t line, llvm::StringRef msg));
+  MOCK_METHOD2(Warn, void(size_t line, wpi_llvm::StringRef msg));
 };
 
 TEST_P(StorageTestEmpty, Construct) {
@@ -546,20 +546,20 @@ TEST_P(StorageTestPopulated, GetEntryInfoPrefixTypes) {
 }
 
 TEST_P(StorageTestPersistent, SavePersistentEmpty) {
-  llvm::SmallString<256> buf;
-  llvm::raw_svector_ostream oss(buf);
+  wpi_llvm::SmallString<256> buf;
+  wpi_llvm::raw_svector_ostream oss(buf);
   storage.SavePersistent(oss, false);
   ASSERT_EQ("[NetworkTables Storage 3.0]\n", oss.str());
 }
 
 TEST_P(StorageTestPersistent, SavePersistent) {
   for (auto& i : entries()) i.getValue()->flags = NT_PERSISTENT;
-  llvm::SmallString<256> buf;
-  llvm::raw_svector_ostream oss(buf);
+  wpi_llvm::SmallString<256> buf;
+  wpi_llvm::raw_svector_ostream oss(buf);
   storage.SavePersistent(oss, false);
-  llvm::StringRef out = oss.str();
+  wpi_llvm::StringRef out = oss.str();
   // std::fputs(out.c_str(), stderr);
-  llvm::StringRef line, rem = out;
+  wpi_llvm::StringRef line, rem = out;
   std::tie(line, rem) = rem.split('\n');
   ASSERT_EQ("[NetworkTables Storage 3.0]", line);
   std::tie(line, rem) = rem.split('\n');
@@ -621,13 +621,13 @@ TEST_P(StorageTestEmpty, LoadPersistentBadHeader) {
   wpi::raw_mem_istream iss("");
   EXPECT_CALL(
       warn,
-      Warn(1, llvm::StringRef("header line mismatch, ignoring rest of file")));
+      Warn(1, wpi_llvm::StringRef("header line mismatch, ignoring rest of file")));
   EXPECT_FALSE(storage.LoadEntries(iss, "", true, warn_func));
 
   wpi::raw_mem_istream iss2("[NetworkTables");
   EXPECT_CALL(
       warn,
-      Warn(1, llvm::StringRef("header line mismatch, ignoring rest of file")));
+      Warn(1, wpi_llvm::StringRef("header line mismatch, ignoring rest of file")));
 
   EXPECT_FALSE(storage.LoadEntries(iss2, "", true, warn_func));
   EXPECT_TRUE(entries().empty());
@@ -850,7 +850,7 @@ TEST_P(StorageTestEmpty, LoadPersistentWarn) {
   wpi::raw_mem_istream iss(
       "[NetworkTables Storage 3.0]\nboolean \"foo\"=foo\n");
   EXPECT_CALL(
-      warn, Warn(2, llvm::StringRef(
+      warn, Warn(2, wpi_llvm::StringRef(
                         "unrecognized boolean value, not 'true' or 'false'")));
   EXPECT_TRUE(storage.LoadEntries(iss, "", true, warn_func));
 

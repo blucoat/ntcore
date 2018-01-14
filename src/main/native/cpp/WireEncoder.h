@@ -52,8 +52,8 @@ class WireEncoder {
   /* Returns number of bytes written to memory buffer. */
   size_t size() const { return m_data.size(); }
 
-  llvm::StringRef ToStringRef() const {
-    return llvm::StringRef(m_data.data(), m_data.size());
+  wpi_llvm::StringRef ToStringRef() const {
+    return wpi_llvm::StringRef(m_data.data(), m_data.size());
   }
 
   /* Writes a single byte. */
@@ -83,7 +83,7 @@ class WireEncoder {
 
   void WriteType(NT_Type type);
   void WriteValue(const Value& value);
-  void WriteString(llvm::StringRef str);
+  void WriteString(wpi_llvm::StringRef str);
 
   /* Utility function to get the written size of a value (without actually
    * writing it).
@@ -93,7 +93,7 @@ class WireEncoder {
   /* Utility function to get the written size of a string (without actually
    * writing it).
    */
-  size_t GetStringSize(llvm::StringRef str) const;
+  size_t GetStringSize(wpi_llvm::StringRef str) const;
 
  protected:
   /* The protocol revision.  E.g. 0x0200 for version 2.0. */
@@ -103,7 +103,7 @@ class WireEncoder {
   const char* m_error;
 
  private:
-  llvm::SmallVector<char, 256> m_data;
+  wpi_llvm::SmallVector<char, 256> m_data;
 };
 
 }  // namespace nt

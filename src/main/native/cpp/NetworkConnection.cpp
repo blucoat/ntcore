@@ -143,7 +143,7 @@ void NetworkConnection::ReadThreadMain() {
                        DEBUG("error reading in handshake: " << decoder.error());
                      return msg;
                    },
-                   [&](llvm::ArrayRef<std::shared_ptr<Message>> msgs) {
+                   [&](wpi_llvm::ArrayRef<std::shared_ptr<Message>> msgs) {
                      m_outgoing.emplace(msgs);
                    })) {
     set_state(kDead);
